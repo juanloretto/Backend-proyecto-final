@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Juan Loretto",
+  "license": "UNLICENSED",
+  "description": "Backend del proyecto final Rolling code",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanloretto/Backend-proyecto-final.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juanloretto/Backend-proyecto-final/issues"
+  },
+  "homepage": "https://github.com/juanloretto/Backend-proyecto-final#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongoose": "^8.7.2"
+  }
+}
