@@ -1,4 +1,5 @@
 const { request, response } = require('express')
+const Usuario = require('../models/usuario.js')
 
 const getUsers = (req = request, res = response) => {
     res.json({
@@ -6,8 +7,28 @@ const getUsers = (req = request, res = response) => {
     });
 };
 
-const postUser = (req = request, res = response) => {
-    const {nombre, puesto} = req.body;
+const postUser = async (req = request, res = response) => {
+
+    const datos = req.body
+    const { nombre, email, password, rol } = datos
+    const usuario = new Usuario({nombre, email, password, rol})
+//Verificar email
+const existeEmail = await Usuario.findOne({email})
+
+if(existeEmail){
+    return res.status(400).json({
+        msg:'El correo ya existe'
+    })
+}
+
+//Guardar en la DB
+await usuario.save()
+res.status(201).json({
+    msg:'Usuario creado con éxito',
+    usuario,
+})
+
+    /*  const {nombre, puesto} = req.body;
     if(nombre){
         res.json({
             message: 'Peticion POST desde controllers',
@@ -19,7 +40,7 @@ const postUser = (req = request, res = response) => {
         res.status(400).json({
             message: 'falta el nombre'
         })
-    }
+    } */
 
 }
 

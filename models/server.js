@@ -1,13 +1,18 @@
 const express = require('express')
 const router = require('../routes/usuarios.js')
+const dbConnection = require('../database/config.js')
 class Server {
     constructor() {
         this.app = express()
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios'
+        this.conectarDB();
         this.middlewares();
         this.routes();
 
+    }
+    async conectarDB(){
+        await dbConnection()
     }
 
     routes() {
