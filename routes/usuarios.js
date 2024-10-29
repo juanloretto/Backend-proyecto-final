@@ -1,13 +1,33 @@
-const Router = require('express')
-const {getUsers, postUser, putUser, deleteUser} = require('../controllers/usuarios.js')
-const router = Router()
+const Router = require("express");
+const { check } = require("express-validator");
+const {validarCampos} = require('../middlewares/validar-campos.js')
 
-router.get('/', getUsers)
+const {
+  getUsers,
+  postUser,
+  putUser,
+  deleteUser,
+} = require("../controllers/usuarios.js");
+const router = Router();
 
-router.post('/', postUser);
+router.get("/", getUsers);
 
-router.put('/:id', putUser);
+router.post(
+  "/",
+  [
+    check("nombre", "El nombre es obligatorio").notEmpty(),
+    check(
+      "password",
+      "La contraseña debe tener minimo 8 caracteres, una mayúscula, minúscula y un dígito"
+    ).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,14}$/),
+    check('email', 'El email no es valido').isEmail(),
+    validarCampos
+  ],
+  postUser
+);
 
-router.delete('/', deleteUser);
+router.put("/:id", putUser);
 
-module.exports = router
+router.delete("/", deleteUser);
+
+module.exports = router;
