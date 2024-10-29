@@ -1,5 +1,7 @@
+const { generarJWT } = require("../helpers/genera-jwt.js");
 const Usuario = require("../models/usuario.js");
 const bcrypt = require("bcrypt");
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -19,9 +21,13 @@ if (!validPassword) {
       message: "El correo o contraseña son incorrectos",
     });
   }
+//GENERO TOKEN
+
+const token = await generarJWT(usuario.id);
 
     res.status(200).json({
       message: "Te logeaste existosamente!",
+      token
     });
   } catch (error) {
     res.status(500).json({
