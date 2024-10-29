@@ -1,7 +1,10 @@
 const Router = require("express");
 const { check } = require("express-validator");
 const {validarCampos} = require('../middlewares/validar-campos.js')
-const {rolValido} = require('../helpers/db-validators.js')
+const {rolValido, emailValido} = require('../helpers/db-validators.js')
+
+
+
 const {
   getUsers,
   postUser,
@@ -21,6 +24,7 @@ router.post(
       "La contraseña debe tener minimo 8 caracteres, una mayúscula, minúscula y un dígito"
     ).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,14}$/),
     check('email', 'El email no es valido').isEmail(),
+    check('email').custom(emailValido),
     check('rol').custom(rolValido),
     validarCampos
   ],
