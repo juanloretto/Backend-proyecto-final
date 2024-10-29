@@ -34,7 +34,7 @@ const putUser = async (req, res) => {
   const salt = bcrypt.genSaltSync();
   resto.password = bcrypt.hashSync(password, salt);
   try {
-    const usuario = await Usuario.findByIdAndUpdate(id, resto);
+    const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
     if (!usuario) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
@@ -47,9 +47,13 @@ const putUser = async (req, res) => {
   }
 };
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  //Borrado permanente
+  const borrarUsuario = await Usuario.findByIdAndDelete(id);
   res.json({
-    message: "Peticion DELETE desde controllers",
+    message: "Usuario eliminado",
+    borrarUsuario,
   });
 };
 

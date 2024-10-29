@@ -33,6 +33,6 @@ router.post(
 
 router.put("/:id", putUser);
 
-router.delete("/", deleteUser);
+router.delete("/:id", deleteUser);
 
 module.exports = router;
