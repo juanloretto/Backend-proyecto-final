@@ -14,14 +14,7 @@ const postUser = async (req = request, res = response) => {
   const { nombre, email, password, rol } = datos;
 
   const usuario = new Usuario({ nombre, email, password, rol });
-  //Verificar email
-  const existeEmail = await Usuario.findOne({ email });
 
-  if (existeEmail) {
-    return res.status(400).json({
-      msg: "El correo ya existe",
-    });
-  }
   //Encriptar Password
   const salt = bcrypt.genSaltSync();
   usuario.password = bcrypt.hashSync(password, salt);
@@ -33,10 +26,25 @@ const postUser = async (req = request, res = response) => {
   });
 };
 
-const putUser = (req, res) => {
-  res.json({
-    message: "Peticion PUT desde controllers",
-  });
+const putUser = async (req, res) => {
+  const { id } = req.params;
+  const { password, _id, email, ...resto } = req.body;
+  console.log(resto);
+  //password
+  const salt = bcrypt.genSaltSync();
+  resto.password = bcrypt.hashSync(password, salt);
+  try {
+    const usuario = await Usuario.findByIdAndUpdate(id, resto);
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    res.status(200).json({
+      message: "Usuario actualizado!",
+      usuario,
+    });
+  } catch {
+    res.status(500).json({ error: "Error al actualizar el usuario" });
+  }
 };
 
 const deleteUser = (req, res) => {
