@@ -22,4 +22,4 @@ const ConfirmoUsuarioId = async (id)=>{
     }
 }
 
-module.exports = { rolValido, emailValido };
+module.exports = { rolValido, emailValido, ConfirmoUsuarioId };

@@ -3,8 +3,15 @@ const Usuario = require("../models/usuario.js");
 const bcrypt = require("bcrypt");
 /* const { validationResult } = require("express-validator"); */
 
-const getUsers = (req = request, res = response) => {
+const getUsers = async (req = request, res = response) => {
+  const { limite=5, desde=0 } = req.query;
+
+  const usuarios = await Usuario.find().limit(limite).skip(desde);
+  const total = await Usuario.countDocuments();
+
   res.json({
+    total,
+    usuarios,
     message: "Peticion GET desde controllers",
   });
 };

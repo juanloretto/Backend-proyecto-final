@@ -1,11 +1,13 @@
 const express = require('express')
 const router = require('../routes/usuarios.js')
+const routerAuth = require('../routes/auth.js')
 const dbConnection = require('../database/config.js')
 class Server {
     constructor() {
         this.app = express()
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios'
+        this.authPath = '/api/auth'
         this.conectarDB();
         this.middlewares();
         this.routes();
@@ -17,6 +19,7 @@ class Server {
 
     routes() {
         this.app.use(this.usuarioPath, router)
+        this.app.use(this.authPath, routerAuth)
         
     }
 
