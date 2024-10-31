@@ -17,7 +17,10 @@ const {
 } = require("../controllers/usuarios.js");
 const router = Router();
 
-router.get("/", getUsers);
+router.get("/", [
+  validarJWT,
+  esAdminRole
+],getUsers);
 
 router.post(
   "/",
