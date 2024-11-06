@@ -8,7 +8,6 @@ class Server {
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios'
         this.authPath = '/api/auth'
-        this.categoriaPath = '/api/categorias'
         this.conectarDB();
         this.middlewares();
         this.routes();
