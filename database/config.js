@@ -9,4 +9,4 @@ try {
 }
 }
 
-module.exports = {dbConnection}
+module.exports = dbConnection
