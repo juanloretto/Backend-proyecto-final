@@ -1,6 +1,8 @@
 const express = require('express')
 const router = require('../routes/usuarios.js')
 const routerAuth = require('../routes/auth.js')
+const routerCat = require('../routes/categorias.js')
+const cors = require('cors');
 const dbConnection = require('../database/config.js')
 class Server {
     constructor() {
@@ -8,6 +10,9 @@ class Server {
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios'
         this.authPath = '/api/auth'
+        this.categoriaPath = '/api/categorias'
+        this.reservaPath = '/api/reservas'
+        this.assetsPath = '/api/'
         this.conectarDB();
         this.middlewares();
         this.routes();
@@ -18,8 +23,11 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.usuarioPath, router)
-        this.app.use(this.authPath, routerAuth)
+        this.app.use(cors());
+
+        this.app.use(this.usuarioPath, router);
+        this.app.use(this.authPath, routerAuth);
+        this.app.use(this.categoriaPath, routerCat);
         
         
     }
