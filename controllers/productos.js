@@ -30,7 +30,7 @@ const obtenerProducto = async (req, res) => {
 };
 
 //AGREGAR PRODUCTO
-const productoPost = async (req, res) => {
+const agregarProducto = async (req, res) => {
     const { precio, categoria, descripcion, img, stock } = req.body;
   
     const nombre = req.body.nombre.toUpperCase();
@@ -62,3 +62,6 @@ const productoPost = async (req, res) => {
       msg: "El producto se agregó exitosamente!",
     });
   };
+
+
+  module.exports = {agregarProducto,obtenerProducto, obtenerProductos }
