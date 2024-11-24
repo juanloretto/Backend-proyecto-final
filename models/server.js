@@ -12,6 +12,7 @@ class Server {
         this.authPath = '/api/auth'
         this.categoriaPath = '/api/categorias'
         this.reservaPath = '/api/reservas'
+        this.productoPath = '/api/productos'
         this.assetsPath = '/api/'
         this.conectarDB();
         this.middlewares();
@@ -28,6 +29,7 @@ class Server {
         this.app.use(this.usuarioPath, router);
         this.app.use(this.authPath, routerAuth);
         this.app.use(this.categoriaPath, routerCat);
+        this.app.use(this.productoPath, routerProd);
         
         
     }
