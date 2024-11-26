@@ -63,5 +63,58 @@ const agregarProducto = async (req, res) => {
     });
   };
 
+  //ACTUALIAZAR PRODUCTO
+  const actualizarProducto = async (req, res) => {
+    const { id } = req.params;
+    const { precio, categoria, descripcion, disponible, estado } = req.body;
+    const usuario = req.usuario._id;
+  
+    let data = {
+      precio,
+      descripcion,
+      categoria,
+      disponible,
+      usuario,
+      estado,
+    };
+  
+    if (req.body.nombre) {
+      data.nombre = req.body.nombre.toUpperCase();
+    }
+  
+    if (req.body.stock) {
+      data.stock = req.body.stock;
+    }
+    if (req.body.img) {
+      data.img = req.body.img;
+    }
+  
+    const producto = await Producto.findByIdAndUpdate(id, data, { new: true })
+      .populate("categoria", "nombre")
+      .populate("usuario", "email");
+  
+    res.status(200).json({
+      producto,
+      msg: "Producto actualizado!",
+    });
+  };
+
+  //BORRAR PRODUCTO
+  const borrarProducto = async (req, res) => {
+    const { id } = req.params;
+  
+    const productoBorrado = await Producto.findByIdAndUpdate(
+      id,
+      { estado: false },
+      { new: true }
+    );
+  
+    const { nombre } = productoBorrado;
+  
+    res.status(200).json({
+      msg: "El producto fue borrado",
+      nombre,
+    });
+  };
 
   module.exports = {agregarProducto,obtenerProducto, obtenerProductos }
