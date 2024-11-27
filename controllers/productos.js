@@ -4,6 +4,7 @@ const Producto = require("../models/producto");
 //GET PAGINACION DE PRODUCTOS
 const obtenerProductos = async (req, res) => {
   const { limite = 5, desde = 0 } = req.query;
+
   const productos = await Producto.find({ estado: true })
     .skip(Number(desde))
     .limit(Number(limite))
@@ -42,7 +43,7 @@ const agregarProducto = async (req, res) => {
         msg: `El producto ${productoDB.nombre} ya existe`,
       });
     }
-    //Generar la data a guardar
+  
     const data = {
       nombre,
       categoria,
@@ -55,7 +56,6 @@ const agregarProducto = async (req, res) => {
   
     const producto = new Producto(data);
   
-    //grabar en la base de datos
     await producto.save();
   
     res.status(201).json({
@@ -70,6 +70,7 @@ const agregarProducto = async (req, res) => {
     const usuario = req.usuario._id;
   
     let data = {
+      nombre,
       precio,
       descripcion,
       categoria,
@@ -92,7 +93,7 @@ const agregarProducto = async (req, res) => {
     const producto = await Producto.findByIdAndUpdate(id, data, { new: true })
       .populate("categoria", "nombre")
       .populate("usuario", "email");
-  
+     
     res.status(200).json({
       producto,
       msg: "Producto actualizado!",
@@ -117,4 +118,4 @@ const agregarProducto = async (req, res) => {
     });
   };
 
-  module.exports = {agregarProducto,obtenerProducto, obtenerProductos }
+  module.exports = {agregarProducto,obtenerProducto, obtenerProductos, borrarProducto, actualizarProducto }

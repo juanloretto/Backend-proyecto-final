@@ -26,6 +26,6 @@ routerCat.post(
 
 routerCat.put("/:id", [validarJWT, esAdminRole], cambiarCategoria);
 
-routerCat.delete("/:id", borrarCategoria);
+routerCat.delete("/:id",[validarJWT, esAdminRole], borrarCategoria);
 
 module.exports = routerCat;

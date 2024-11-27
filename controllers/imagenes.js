@@ -27,7 +27,18 @@ const crearImagen = async (req, res) => {
 
 const obtenerTodasLasImagenes = async (req, res) => {
   try {
-    const imagenes = await Imagen.find().sort({ createdAt: -1 });
+    const { limite = 5, desde = 0 } = req.query;
+    const limiteNumero = parseInt(limite, 10);
+    const desdeNumero = parseInt(desde, 10);
+    if (isNaN(limiteNumero) || isNaN(desdeNumero)) {
+      return res.status(400).json({
+        mensaje: "Los valores de 'limite' y 'desde' deben ser números válidos.",
+      });
+    }
+    const imagenes = await Imagen.find()
+      .skip(desdeNumero)
+      .limit(limiteNumero)
+      .sort({ createdAt: -1 });
     res.status(200).json(imagenes);
   } catch (error) {
     res.status(500).json({

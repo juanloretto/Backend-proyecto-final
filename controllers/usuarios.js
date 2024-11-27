@@ -4,9 +4,18 @@ const bcrypt = require("bcrypt");
 /* const { validationResult } = require("express-validator"); */
 
 const getUsers = async (req = request, res = response) => {
-  const { limite=5, desde=0 } = req.query;
+  const { limite = 10, desde = 0 } = req.query;
 
-  const usuarios = await Usuario.find().limit(limite).skip(desde);
+  const limiteNumero = parseInt(limite, 10);
+  const desdeNumero = parseInt(desde, 10);
+
+  if (isNaN(limiteNumero) || isNaN(desdeNumero)) {
+    return res.status(400).json({
+      mensaje: "Los valores de 'limite' y 'desde' deben ser números válidos.",
+    });
+  }
+
+  const usuarios = await Usuario.find().limit(limiteNumero).skip(desdeNumero);
   const total = await Usuario.countDocuments();
 
   res.json({
