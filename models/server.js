@@ -1,9 +1,12 @@
 const express = require('express')
 const router = require('../routes/usuarios.js')
 const routerAuth = require('../routes/auth.js')
+const routerProd = require('../routes/productos.js')
 const routerCat = require('../routes/categorias.js')
+const routerImg = require('../routes/imagenes.js');
 const cors = require('cors');
-const dbConnection = require('../database/config.js')
+const dbConnection = require('../database/config.js');
+
 class Server {
     constructor() {
         this.app = express()
@@ -13,7 +16,7 @@ class Server {
         this.categoriaPath = '/api/categorias'
         this.reservaPath = '/api/reservas'
         this.productoPath = '/api/productos'
-        this.assetsPath = '/api/'
+        this.imagenesPath = '/api/imagenes'
         this.conectarDB();
         this.middlewares();
         this.routes();
@@ -30,6 +33,7 @@ class Server {
         this.app.use(this.authPath, routerAuth);
         this.app.use(this.categoriaPath, routerCat);
         this.app.use(this.productoPath, routerProd);
+        this.app.use(this.imagenesPath, routerImg)
         
         
     }
