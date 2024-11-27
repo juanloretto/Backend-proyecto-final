@@ -2,12 +2,14 @@ const Imagen = require("../models/imagenes");
 
 const crearImagen = async (req, res) => {
   try {
-    const { titulo, descripcion, urlImagen } = req.body;
+    const { descripcion, urlImagen } = req.body;
+    const titulo = req.body.titulo.toUpperCase();
+    const imagenExistente = await Imagen.findOne({ urlImagen });
 
-    if (!titulo || !urlImagen) {
-      return res
-        .status(400)
-        .json({ mensaje: "El título y la URL de la imagen son obligatorios." });
+    if (imagenExistente) {
+      return res.status(400).json({
+        msg: `La imagen con la URL ${urlImagen} ya existe.`,
+      });
     }
 
     const nuevaImagen = new Imagen({ titulo, descripcion, urlImagen });
@@ -28,12 +30,10 @@ const obtenerTodasLasImagenes = async (req, res) => {
     const imagenes = await Imagen.find().sort({ createdAt: -1 });
     res.status(200).json(imagenes);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        mensaje: "Error al obtener las imágenes.",
-        error: error.message,
-      });
+    res.status(500).json({
+      mensaje: "Error al obtener las imágenes.",
+      error: error.message,
+    });
   }
 };
 
@@ -70,19 +70,15 @@ const actualizarImagenPorId = async (req, res) => {
       return res.status(404).json({ mensaje: "Imagen no encontrada." });
     }
 
-    res
-      .status(200)
-      .json({
-        mensaje: "Imagen actualizada con éxito.",
-        imagen: imagenActualizada,
-      });
+    res.status(200).json({
+      mensaje: "Imagen actualizada con éxito.",
+      imagen: imagenActualizada,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        mensaje: "Error al actualizar la imagen.",
-        error: error.message,
-      });
+    res.status(500).json({
+      mensaje: "Error al actualizar la imagen.",
+      error: error.message,
+    });
   }
 };
 
