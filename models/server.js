@@ -33,7 +33,7 @@ class Server {
         this.app.use(this.authPath, routerAuth);
         this.app.use(this.categoriaPath, routerCat);
         this.app.use(this.productoPath, routerProd);
-        this.app.use(this.imagenesPath, routerImg)
+        this.app.use(this.imagenesPath, routerImg);
         
         
     }
