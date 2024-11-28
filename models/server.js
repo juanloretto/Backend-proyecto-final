@@ -4,6 +4,7 @@ const routerAuth = require('../routes/auth.js')
 const routerProd = require('../routes/productos.js')
 const routerCat = require('../routes/categorias.js')
 const routerImg = require('../routes/imagenes.js');
+const routerRes = require('../routes/reservas.js')
 const cors = require('cors');
 const dbConnection = require('../database/config.js');
 
@@ -28,12 +29,12 @@ class Server {
 
     routes() {
         this.app.use(cors());
-
         this.app.use(this.usuarioPath, router);
         this.app.use(this.authPath, routerAuth);
         this.app.use(this.categoriaPath, routerCat);
         this.app.use(this.productoPath, routerProd);
         this.app.use(this.imagenesPath, routerImg);
+        this.app.use(this.reservaPath, routerRes)
         
         
     }
