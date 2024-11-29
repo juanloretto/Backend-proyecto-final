@@ -18,6 +18,7 @@ class Server {
         this.reservaPath = '/api/reservas'
         this.productoPath = '/api/productos'
         this.imagenesPath = '/api/imagenes'
+        this.canchasPath = '/api/canchas'
         this.conectarDB();
         this.middlewares();
         this.routes();
@@ -35,6 +36,7 @@ class Server {
         this.app.use(this.productoPath, routerProd);
         this.app.use(this.imagenesPath, routerImg);
         this.app.use(this.reservaPath, routerRes)
+        this.app.use(this.canchasPath, routerCan)
         
         
     }
