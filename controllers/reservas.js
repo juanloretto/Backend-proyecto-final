@@ -20,22 +20,36 @@ const traerReservas = async (req, res) => {
 };
 
 const reservar = async (req, res) => {
-  const cancha = req.body;
-  const horario = new Date(req.body.horario);
-  if (!cancha || !horario) {
+  const { cancha, horarioInicio, horarioFin } = req.body;
+  const inicio = new Date(horarioInicio);
+  const fin = new Date(horarioFin);
+  const duracionReserva = (fin - inicio) / (1000 * 60 * 60); 
+  if (!cancha || !inicio || !fin) {
     return res.status(400).json({ msg: "Cancha y horario son obligatorios" });
   }
+  if (inicio >= fin) {
+    return res.status(400).json({ msg: "La hora de inicio debe ser anterior a la hora de fin" });
+  }
+  if (duracionReserva < 1) {
+    return res.status(400).json({ msg: "La reserva debe tener una duración mínima de una hora" });
+  }
+
   const reservaExistente = await Reserva.findOne({
     cancha,
-    horario: {
-      $gte: new Date(horario.getTime() - 30 * 60 * 1000),
-      $lte: new Date(horario.getTime() + 30 * 60 * 1000),
-    },
+    $or: [
+      {
+        horarioInicio: { $lt: fin },
+        horarioFin: { $gt: inicio },
+      },
+      {
+        horarioInicio: { $gte: inicio, $lt: fin },
+      },
+    ],
   });
   if (reservaExistente) {
     return res.status(400).json({ msg: "Ese horario ya está reservado" });
   }
-  const data = { horario, cancha };
+  const data = { horarioInicio: inicio, horarioFin: fin, cancha };
   const reserva = new Reserva(data);
   await reserva.save();
   res.status(201).json({
@@ -62,4 +76,4 @@ const quitarReserva = async (req, res) => {
       .json({ msg: "Hubo un error al intentar eliminar la reserva" });
   }
 };
-module.exports = {traerReservas, reservar, quitarReserva}
+module.exports = { traerReservas, reservar, quitarReserva };

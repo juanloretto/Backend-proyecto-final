@@ -2,9 +2,13 @@ const { model, Schema } = require("mongoose");
 const usuario = require("./usuario");
 
 const ReservaSchema = Schema({
-  horario: {
+  horarioInicio: {
     type: Date,
-    required: [true, "El horario es obligatorio"],
+    required: [true, "El horario de inicio es obligatorio"],
+  },
+  horarioFin: {
+    type: Date,
+    required: [true, "El horario de fin es obligatorio"],
   },
   cancha: {
     type: String,

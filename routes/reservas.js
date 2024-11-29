@@ -9,21 +9,21 @@ const {
   quitarReserva,
 } = require("../controllers/reservas.js");
 
-const routerRes = Router;
-routerRes.get("/", esAdminRole, validarJWT, traerReservas);
+const routerRes = Router();
+routerRes.get("/", validarJWT, esAdminRole, traerReservas);
 
 routerRes.post(
   "/",
   [
-    esAdminRole,
     validarJWT,
+    esAdminRole,
     body("horario")
-      .isIso8601()
+      .isISO8601()
       .withMessage("El horario debe ser formato ISO8601"),
   ],
   reservar
 );
 
-routerRes.delete("/:id", esAdminRole, validarJWT, quitarReserva);
+routerRes.delete("/:id", validarJWT, esAdminRole, quitarReserva);
 
 module.exports = routerRes;
