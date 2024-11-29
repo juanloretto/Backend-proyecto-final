@@ -35,18 +35,18 @@ const agregarCancha = async (req, res) => {
         msg: "Todos los campos son obligatorios: nombre, tipo, precioPorHora, descripción e imagen.",
       });
     }
+    
+    const tiposValidos = [
+        "Fútbol 5",
+        "Fútbol 7",
+        "Fútbol 11",
+        "Paddle 1",
+        "Paddle 2",
+        "Paddle 3",
+    ];
     const tiposValidosMayusculas = tiposValidos.map((tipo) =>
       tipo.toUpperCase()
     );
-
-    const tiposValidos = [
-      "Fútbol 5",
-      "Fútbol 7",
-      "Fútbol 11",
-      "Paddle 1",
-      "Paddle 2",
-      "Paddle 3",
-    ];
 
     if (!tiposValidosMayusculas.includes(tipoEnMayusculas)) {
       return res.status(400).json({

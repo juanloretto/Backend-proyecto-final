@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose')
 
 
-const Cancha = new Schema({
+const CanchaSchema = new Schema({
   nombre: {
     type: String,
     required: [true, "El nombre de la cancha es obligatorio"],
@@ -30,4 +30,4 @@ const Cancha = new Schema({
   },
 });
 
-module.exports = model("Cancha", Cancha);
+module.exports = model("Cancha", CanchaSchema);
