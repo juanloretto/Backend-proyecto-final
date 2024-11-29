@@ -5,6 +5,7 @@ const routerProd = require('../routes/productos.js')
 const routerCat = require('../routes/categorias.js')
 const routerImg = require('../routes/imagenes.js');
 const routerRes = require('../routes/reservas.js')
+const routerCan = require('../routes/canchas.js')
 const cors = require('cors');
 const dbConnection = require('../database/config.js');
 

@@ -8,3 +8,5 @@ const routerCan = Router()
 routerCan.get("/", getCanchas)
 routerCan.post("/", validarJWT, esAdminRole, agregarCancha)
 routerCan.put("/:id", validarJWT, esAdminRole, actualizarCancha)
+
+module.exports = routerCan

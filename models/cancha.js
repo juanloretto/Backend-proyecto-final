@@ -1,5 +1,5 @@
 const { model, Schema } = require('mongoose')
-const { Schema, model } = require("mongoose");
+
 
 const Cancha = new Schema({
   nombre: {

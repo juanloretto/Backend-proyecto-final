@@ -26,8 +26,6 @@ const getCanchas = async (req, res) => {
   }
 };
 
-module.exports = { getCanchas };
-
 const agregarCancha = async (req, res) => {
   const { nombre, tipo, precioPorHora, descripcion, imagen } = req.body;
   const tipoEnMayusculas = tipo.toUpperCase();
@@ -135,12 +133,12 @@ const actualizarCancha = async (req, res) => {
   if (precioPorHora !== undefined) cancha.precioPorHora = precioPorHora;
   if (estado !== undefined) cancha.estado = estado; // Aseguramos que el estado se actualice si se proporciona
   if (imagen !== undefined) cancha.imagen = imagen;
-};
+
 await cancha.save();
 
   res.status(200).json({
     msg: "Cancha actualizada correctamente",
     cancha, 
   });
-
+};
 module.exports = { getCanchas, agregarCancha, actualizarCancha };
