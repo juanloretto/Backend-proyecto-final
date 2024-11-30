@@ -27,7 +27,12 @@ const token = await generarJWT(usuario.id);
 
     res.status(200).json({
       message: "Te logeaste existosamente!",
-      token
+      token,
+      usuario: {
+        id: usuario.id,
+        nombre: usuario.nombre,
+        email: usuario.email,
+      },
     });
   } catch (error) {
     res.status(500).json({
